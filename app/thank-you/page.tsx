@@ -10,7 +10,13 @@ const heroVideoUrl = process.env.NEXT_PUBLIC_HERO_VIDEO_URL || ""
 
 export default function ThankYouPage() {
   useEffect(() => {
-    try { if (window.fbq) window.fbq("track", "Lead") } catch {}
+    try {
+      if (window.fbq) {
+        // Deduplicate: use a unique event_id so Meta ignores duplicate fires
+        const eventId = `lead_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`
+        window.fbq("track", "Lead", {}, { eventID: eventId })
+      }
+    } catch {}
   }, [])
 
   return (

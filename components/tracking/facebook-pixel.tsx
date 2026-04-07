@@ -1,7 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
-import { usePathname } from "next/navigation"
+import { useEffect, useRef } from "react"
 
 const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID || ""
 
@@ -13,10 +12,14 @@ declare global {
 }
 
 export function FacebookPixel() {
-  const pathname = usePathname()
+  const initialized = useRef(false)
 
   useEffect(() => {
     if (!FB_PIXEL_ID) return
+    if (initialized.current) return
+    initialized.current = true
+
+    // Skip if already loaded (e.g. back/forward cache)
     if (window.fbq) return
 
     const f = window
@@ -43,13 +46,6 @@ export function FacebookPixel() {
     window.fbq("init", FB_PIXEL_ID)
     window.fbq("track", "PageView")
   }, [])
-
-  useEffect(() => {
-    if (!FB_PIXEL_ID) return
-    if (window.fbq) {
-      window.fbq("track", "PageView")
-    }
-  }, [pathname])
 
   if (!FB_PIXEL_ID) return null
 
