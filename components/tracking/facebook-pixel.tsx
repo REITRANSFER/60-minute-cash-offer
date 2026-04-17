@@ -44,7 +44,6 @@ export function FacebookPixel() {
     fjs?.parentNode?.insertBefore(s, fjs)
 
     window.fbq("init", FB_PIXEL_ID)
-    window.fbq("track", "PageView")
   }, [])
 
   if (!FB_PIXEL_ID) return null
