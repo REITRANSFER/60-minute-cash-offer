@@ -327,7 +327,7 @@ export function SurveyCard({ initialAddress }: SurveyCardProps = {}) {
       setTimeout(() => { setDisqualifyReason("notOwner"); setIsDisqualified(true) }, 300)
       return
     }
-    if (field === "ownershipLength" && value === "1-3-years") {
+    if (field === "ownershipLength" && ["1-3-years", "3-5-years"].includes(value)) {
       setTimeout(() => { setDisqualifyReason("noEquity"); setIsDisqualified(true) }, 300)
       return
     }
@@ -390,7 +390,7 @@ export function SurveyCard({ initialAddress }: SurveyCardProps = {}) {
       },
       noEquity: {
         title: "We're Unable to Make an Offer",
-        message: "Unfortunately, properties owned for less than 3 years typically don't have enough equity for us to make a fair cash offer.",
+        message: "Unfortunately, properties owned for less than 5 years typically don't have enough equity for us to make a fair cash offer.",
         detail: "If your situation changes or you'd like to discuss your options, feel free to give us a call. We're always happy to help.",
       },
       outsideArea: {
